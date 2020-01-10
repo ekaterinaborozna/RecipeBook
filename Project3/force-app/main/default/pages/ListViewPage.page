@@ -1,0 +1,20 @@
+<apex:page standardController="Account" recordSetVar="accounts" tabstyle="account" extensions="listView">
+    <apex:form >
+        <apex:sectionHeader title="Listview Sample" subtitle="Accounts"/>
+        <apex:pageBlock id="list">
+            <apex:pageBlockButtons location="top">
+                <apex:outputLabel value="View: "/>
+                <apex:selectList value="{!filterId}" size="1">
+                    <apex:actionSupport event="onchange" rerender="list"/>
+                    <apex:selectOptions value="{!listviewoptions}"/>
+                </apex:selectList>
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!accounts}" var="acc">
+                <apex:column >
+                    <a href="/{!acc.ID}" target="ShowRecord"><apex:outputText value="{!acc.name}"/></a>
+                </apex:column>
+            </apex:pageBlockTable><br/>
+            <apex:commandLink value="Show More ({!ResultSize}) >>" action="{!ShowAll}" rendered="{!ResultSize>PageSize}"/>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

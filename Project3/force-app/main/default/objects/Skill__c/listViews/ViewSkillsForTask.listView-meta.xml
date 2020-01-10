@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ViewSkillsForTask</fullName>
+    <columns>NAME</columns>
+    <columns>Type__c</columns>
+    <filterScope>Mine</filterScope>
+    <label>ViewSkillsForTask</label>
+</ListView>

@@ -1,0 +1,16 @@
+<apex:page standardController="Account" extensions="hExtention">
+    <apex:form id="result">
+        
+    <apex:actionFunction name="actionfun" action="{!collectAttach}" >         
+    </apex:actionFunction>  
+        
+    <apex:inputFile value="{!file.body}" fileName="{!file.name}" onchange="actionfun1();return false;" accept="doc,docx,pdf,xls,xlsx"/>
+    </apex:form>
+               
+    
+    <script type="text/javascript">
+    function actionfun1(){
+        actionfun();
+    }
+    </script> 
+</apex:page>

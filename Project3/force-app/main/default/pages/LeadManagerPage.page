@@ -1,0 +1,52 @@
+<apex:page Controller="LeadManagerController" lightningStylesheets="true">
+    <apex:form > 
+        <apex:pageBlock id="table" title="{!$Label.LeadForm}">
+            <apex:variable var="index" value="{!0}"/>
+            <apex:variable var="rowNumber" value="{!0}"/>
+            <apex:pageBlockTable value="{!firstLeadsToInsertList}" var="lead">
+                <apex:column headerValue="№">
+                    <apex:outputText >
+                        <apex:variable var="index" value="{!index + 1}"/>
+                        {!index}
+                    </apex:outputText>
+                </apex:column>
+                <apex:column headerValue="Action">
+                    <apex:commandButton value="{!$Label.Delete}" action="{!deleteRow}" reRender="table">
+                        <apex:param name="rowIndexName" value="{!rowNumber}"/>
+                    </apex:commandButton>
+                    <apex:variable var="rowNumber" value="{!rowNumber+1}"/>    
+                </apex:column>
+                <apex:column headerValue="{!$ObjectType.Lead.fields['FirstName'].label}">
+                    <apex:inputField value="{!lead.FirstName}" />                    
+                </apex:column>
+                <apex:column headerValue="{!$ObjectType.Lead.fields['LastName'].label}">
+                    <apex:inputField value="{!lead.LastName}" required="false" />
+                </apex:column>
+                <apex:column headerValue="{!$ObjectType.Lead.fields['Company'].label}">
+                    <apex:inputField value="{!lead.Company}" required="false"/>
+                </apex:column>
+                <apex:column headerValue="{!$ObjectType.Lead.fields['Email'].label}">
+                    <apex:inputField value="{!lead.email}"/>
+                </apex:column>
+                <apex:column headerValue="{!$ObjectType.Lead.fields['Phone'].label}">
+                    <apex:inputField value="{!lead.phone}"/>
+                </apex:column>                
+            </apex:pageBlockTable>
+            <!--Pagination
+            <apex:panelGrid columns="4">
+                <apex:commandLink action="{!first}">FIRST</apex:commandLink>
+                <apex:commandLink action="{!next}">NEXT</apex:commandLink>
+                <apex:commandLink action="{!previous}">PREVIOUS</apex:commandLink>
+                <apex:commandLink action="{!last}">LAST</apex:commandLink>
+            </apex:panelGrid>-->
+            
+            <apex:pageBlockButtons >
+                <apex:commandButton value="{!$Label.AddRow}" action="{!addLead}"/>
+                <apex:commandButton value="{!$Label.Save}" action="{!save}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock> 
+        
+        <apex:pageMessages >
+        </apex:pageMessages>  
+    </apex:form>
+</apex:page>

@@ -1,0 +1,81 @@
+<apex:page Controller="ActivitiesController" docType="HTML-5.0" lightningStylesheets="true" >
+    <apex:form id="form">
+        <apex:pageBlock title="Activities Details" >
+           <apex:pageBlockTable value="{!events}" var="c"  >
+               <apex:column headerValue="Assigned To" > 
+                   <apex:variable var="field" value="{!IF(BEGINS(c.e.Id, '00T'), 'WhoId', 'OwnerId')}" />
+                   <apex:outputField value="{!c.e[field]}" />
+               </apex:column> 
+              <apex:column headerValue="Related To"> 
+                   <apex:outputField value="{!c.e['WhatId']}" />
+               </apex:column> 
+               <apex:column headerValue="Subject">  
+                   <apex:outputField value="{!c.e['Subject']}"/>
+               </apex:column>
+               <apex:column headerValue="Type">  
+                   <apex:outputField value="{!c.e['Type']}"/>
+               </apex:column>
+               <apex:column headerValue="StartDateTime">
+                   <apex:variable var="field1" value="{!IF(BEGINS(c.e.Id, '00T'), 'ActivityDate', 'StartDateTime')}" />
+                   <apex:outputField value="{!c.e[field1]}" />
+               </apex:column>  
+               <apex:column headerValue="EndDateTime">
+                   <apex:variable var="field2" value="{!IF(BEGINS(c.e.Id, '00T'), 'ActivityDate', 'EndDateTime')}" />
+                   <apex:outputField value="{!c.e[field2]}" />
+               </apex:column>  
+               <apex:column headerValue="SybType">
+                   <apex:variable var="field3" value="{!IF(BEGINS(c.e.Id, '00T'), 'TaskSubtype', 'EventSubtype')}" />
+                   <apex:outputField value="{!c.e[field3]}" />
+               </apex:column>  
+               <apex:column headerValue="Status">
+                   <apex:variable var="field4" value="{!IF(BEGINS(c.e.Id, '00T'), 'Status', 'EventSubtype')}" />
+                   <apex:outputField value="{!c.e[field4]}" />
+               </apex:column>
+               <apex:column headerValue="Action">
+                   <apex:commandLink action="{!deleteActivity}" value="Delete Activity" reRender="form">
+                       <apex:param value="{!c.e.Id}" name="selected"
+                                   assignTo="{!selectedActivity}"/>
+                   </apex:commandLink>
+               </apex:column>
+               <apex:inlineEditSupport showOnEdit="saveButton" event="ondblclick" /> 
+            </apex:pageBlockTable>
+            <apex:pageBlockButtons location="Bottom">
+                <apex:selectList value="{!sortBy}" size="1">
+                    <apex:selectOptions value="{!sortByFields}"/>
+                </apex:selectList>
+                <apex:commandButton value="Sort" action="{!NULL}" styleClass="slds-vf-button_brand" />
+                <apex:commandButton value="Save" action="{!save}" id="saveButton" styleClass="slds-vf-button_brand" />
+            </apex:pageBlockButtons>            
+            <apex:commandButton value="<<" rerender="form" action="{!beginning}" disabled="{!prev}"/>  
+            <apex:commandButton value="<" rerender="form" action="{!previous}" disabled="{!prev}"/>  
+            <apex:commandButton value=">" rerender="form" action="{!next}" disabled="{!nxt}"/>  
+            <apex:commandButton value=">>" rerender="form" action="{!end}" disabled="{!nxt}"/>
+        </apex:pageBlock>
+        <apex:pageMessages >
+        </apex:pageMessages>
+        <apex:pageBlock title="Search by Type">
+            <apex:pageblockSection >
+                <apex:selectList value="{!filterByType}" size="1">
+                    <apex:selectOptions value="{!filterTypeObj}"/>
+                </apex:selectList>
+            </apex:pageblockSection>        
+            <apex:pageBlock title="Search by Text">
+                <apex:selectList value="{!filterByField}" size="1">
+                    <apex:selectOptions value="{!filterFields}"/> 
+                </apex:selectList>
+                <apex:pageblockSection >
+                <apex:inputText value="{!textSearch}" title="Text for search" label="Text" />
+                    </apex:pageblockSection>
+            </apex:pageBlock>            
+            <apex:pageBlock title="Search by Date">
+                <apex:pageblockSection >
+                    <apex:input value="{!filterByDate}" type="date" label="Date" />
+                </apex:pageblockSection>
+            </apex:pageBlock>        
+            <apex:pageblockButtons location="bottom">
+                <apex:commandButton value="Search" action="{!null}" styleClass="slds-vf-button_brand"/>
+                <apex:commandButton value="Update" action="{!resetFunction}" styleClass="slds-vf-button_brand" />   
+            </apex:pageblockButtons>     
+        </apex:pageBlock>        
+  </apex:form>
+</apex:page>

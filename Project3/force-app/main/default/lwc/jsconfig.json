@@ -1,0 +1,47 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "baseUrl": ".",
+        "paths": {
+            "c/detail": [
+                "detail/detail.js"
+            ],
+            "c/eventSimple": [
+                "eventSimple/eventSimple.js"
+            ],
+            "c/helloWorld": [
+                "helloWorld/helloWorld.js"
+            ],
+            "c/mainPage": [
+                "mainPage/mainPage.js"
+            ],
+            "c/paginationParent": [
+                "paginationParent/paginationParent.js"
+            ],
+            "c/paginatorBottom": [
+                "paginatorBottom/paginatorBottom.js"
+            ],
+            "c/pubsub": [
+                "pubsub/pubsub.js"
+            ],
+            "c/recordIdExample": [
+                "recordIdExample/recordIdExample.js"
+            ],
+            "c/recordList": [
+                "recordList/recordList.js"
+            ],
+            "c/selector": [
+                "selector/selector.js"
+            ]
+        }
+    },
+    "include": [
+        "**/*",
+        "../../../../.sfdx/typings/lwc/**/*.d.ts"
+    ],
+    "typeAcquisition": {
+        "include": [
+            "jest"
+        ]
+    }
+}

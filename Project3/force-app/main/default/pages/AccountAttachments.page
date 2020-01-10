@@ -1,0 +1,53 @@
+<apex:page standardController="Account" extensions="AccountAttachmentExtention" docType="html-5.0" lightningStylesheets="true" >
+    <apex:outputText value="The time right now is: {0,date,yyyy.MM.dd G 'at' HH:mm:ss z}"  id="info">
+        <apex:param value="{!serverTime}"/>
+    </apex:outputText>
+    <apex:form id="idForm">
+        <apex:pageBlock id="idBlock">
+            <apex:outputText id="idTitle" value="Create new Account" rendered="{!(!showBlockAfterSave)}"/>
+            <apex:outputText value="New {!typeOfAccount} Account created {!SystemTime} System Time and {!UserTime} User Time" 
+                             rendered="{!showBlockAfterSave}"/>            
+            <apex:outputText value="{!attachmentTitle}" rendered="{!showTitle}"/><br/> 
+            <apex:inputField value="{!Account.Name}" required="false" style="margin: 20px 10px;"/>
+            <apex:inputField value="{!Account.Type}" id="idType" onchange="changeTypeinTitle('{!$Component.idType}', '{!$Component.idBlock.idTitle}')" />    
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton action="{!saveAccount}" value="saveAccount" styleClass="slds-vf-button_brand" />  
+            </apex:pageBlockButtons>            
+            <apex:actionFunction action="{!updateTime}" reRender="info" name="showTime" oncomplete="turnOnTimeout();" />   
+        </apex:pageBlock> 
+    </apex:form>       
+    
+    <script type="text/javascript">
+    function turnOnTimeout() {
+        setTimeout(showTime, 100);
+    }
+    turnOnTimeout();
+    
+    function changeTypeinTitle (inputTypeId, titleId) {
+        if (document.getElementById(inputTypeId).value.length != null) {
+            var inputTypeValue = document.getElementById(inputTypeId).value; 
+            document.getElementById(titleId).innerText = 'Create new ' + inputTypeValue + ' Account';      
+        }
+    }     
+    </script>     
+    
+    <apex:form rendered="{!hideInputButton}" id="inputForm">
+        <apex:pageBlock title="Attach panel">
+            <apex:inputFile value="{!file.body}" fileName="{!file.name}" ></apex:inputFile>       
+            <apex:commandButton value="save" action="{!save}" styleClass="slds-vf-button_brand"/>
+        </apex:pageBlock>
+    </apex:form>     
+    <apex:form >
+        <apex:pageBlock rendered="{!showBlockAfterSave}" >        
+            <apex:pageBlockSection title="Account Details" collapsible="false">                                   
+                <apex:repeat value="{!$ObjectType.Account.FieldSets.All_Fields}" var="field">
+                    <apex:outputField value="{!account[field]}"/>
+                </apex:repeat>    			
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="show/hide Attach panel" action="{!showHideInput}" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>    
+  <apex:messages />
+</apex:page>

@@ -1,0 +1,13 @@
+<apex:page sidebar="false" showHeader="true">    
+    <apex:composition template="CharityTemplate">
+        <apex:define name="Header">
+            Main information
+        </apex:define>
+        <apex:define name="Content">
+           <!--Link to page info-->
+            <apex:outputLink value="{!URLFOR('Info')}" >
+                Go to page Info
+            </apex:outputLink> 
+        </apex:define>
+    </apex:composition>    
+</apex:page>

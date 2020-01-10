@@ -1,0 +1,61 @@
+<apex:page standardController="Account" extensions="TaskExtension" recordSetVar="tasks"  showQuickActionVfHeader="true" sidebar="false" docType="html-5.0" >
+   <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+       <head>
+           <apex:stylesheet value="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#task')}" />
+           <meta charset="utf-8" />
+           <meta http-equiv="x-ua-compatible" content="ie=edge" />
+           <title>Salesforce Tasks
+           </title>
+           <meta name="viewport" content="width=device-width, initial-scale=1" />
+           <apex:slds />           
+       </head>
+       <body>
+         <apex:form id="form" >  
+               <div class="slds-scope">
+                   <apex:repeat value="{!tasks}" var="task">
+                   <article class="slds-card">
+                       <div class="slds-card__header slds-grid">
+                           <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                               <div class="slds-media__figure">
+                                   <span class="slds-icon_container slds-icon-standard-task" title="task">
+                                       <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                          <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/standard-sprite/svg/symbols.svg#task')}"></use>
+                                       </svg> 
+                                       <span class="slds-assistive-text">Task</span>
+                                   </span>
+                               </div>
+                               <div class="slds-media__body">
+                                   <h2 class="slds-card__header-title">
+                                       <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Tasks">
+                                           <span>Task</span>
+                                       </a>
+                                   </h2>
+                               </div>
+                           </header>
+                       </div>
+                       <div class="slds-card__body slds-card__body_inner">     
+                           <apex:repeat value="{!$ObjectType.Task.FieldSets.FieldsForMobile}" var="fieldSet">                                 
+                               <div class="slds-tile__detail">
+                                   <dl class="slds-list_horizontal slds-wrap">
+                                       <dt class="slds-item_label slds-text-color_weak slds-truncate" title="First Label">{!fieldSet.Label}  :</dt>
+                                       <dd class="slds-item_detail slds-truncate" title="Description for first label">{!task[fieldSet]}</dd>
+                                   </dl>
+                               </div>
+                           </apex:repeat>
+                           <apex:outputLink value="{!URLFOR('/'+task.Id)}" >
+                               View Task
+                           </apex:outputLink> 
+                       </div>
+                   </article>
+                 </apex:repeat> 
+               </div> 
+                <apex:commandButton value="First" action="{!ssc.first}" disabled="{!!ssc.hasPrevious}" reRender="form"/>
+                <apex:commandButton value="Previous" action="{!ssc.previous}" disabled="{!!ssc.hasPrevious}" reRender="form"/>
+                <apex:commandButton value="Next" action="{!ssc.next}" disabled="{!!ssc.hasNext}" reRender="form"/>
+                <apex:commandButton value="End" action="{!ssc.last}" disabled="{!!ssc.hasNext}" reRender="form"/><br/>
+                <apex:outputText value="Page {!ssc.pageNumber} of {!CEILING(numRecords / rowsOnPage)}" rendered = "{!if(numRecords>0, 'true', 'false')}"/> 
+                <apex:outputText value="{!ssc.hasNext}"/>   
+           </apex:form>
+    </body>   
+    </html>
+</apex:page>

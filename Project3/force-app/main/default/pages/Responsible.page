@@ -1,0 +1,17 @@
+<apex:page controller="CustomerEntryPageController"> 
+    <apex:form >
+      <apex:pageBlock title="Customer Information" >
+         <apex:pageMessages />
+         <!-- Display Save and Cancel Button -->
+         <apex:pageBlockButtons >
+            <apex:commandButton value="Save" id="saveButton" action="{!savingCustomerRecord}"/>
+         </apex:pageBlockButtons>
+         <!-- A PageBlockSection for Entry and Display Customer Values --> 
+         <apex:pageBlockSection title="Information" columns="2">
+            <apex:outputField value="{!customerObj.Name}">
+               <apex:inlineEditSupport showOnEdit="saveButton" event="ondblclick"/>    
+            </apex:outputField>
+         </apex:pageBlockSection>
+      </apex:pageBlock>
+    </apex:form>
+</apex:page>

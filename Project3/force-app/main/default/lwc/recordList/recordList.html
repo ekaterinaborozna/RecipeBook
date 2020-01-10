@@ -1,0 +1,31 @@
+<template>
+  <lightning-card title="Recipes Book" icon-name="custom:custom63">
+    <div class="slds-m-around_medium">
+      <lightning-input type="search" onchange={handleKeyChange} class="slds-m-bottom_small" label="Search"
+        value={searchKey}></lightning-input>
+      <template if:true={recipes}>
+        <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout">
+          <thead>
+            <tr class="slds-text-heading_label">
+              <th scope="col">
+                <div class="slds-truncate" title="ID">Name</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <template for:each={recipes} for:item="recipe">
+              <tr key={recipe.Id}>
+                <th scope="row">
+                  <lightning-button key={recipe.Id} variant="base" label={recipe.Name} title="View recipe"
+                    onclick={handleRecipeSelected} value={recipe}></lightning-button>
+                </th>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </template>
+    </div>
+    <p class="slds-m-vertical_medium content">Total records: <b>{totalrecords} </b> Page <b>{currentpage}</b> of
+      <b> {totalpages}</b></p>
+  </lightning-card>
+</template>

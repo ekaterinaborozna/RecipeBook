@@ -1,0 +1,49 @@
+<template>
+  <lightning-card title="Recipe details" icon-name="custom:custom63">
+    <template if:true={ingredients}>
+      <template if:true={ingredients.Green}>
+        <div class="green slds-text-heading_label">
+          Recipe: {ingredients.Name}
+        </div>
+      </template>
+      <template if:false={ingredients.Green}>
+        <div class="slds-text-heading_label">
+          Recipe: {ingredients.Name}
+        </div>
+      </template>
+      <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout">
+        <thead>
+          <tr class="slds-text-heading_label">
+            <th scope="col">
+              <div class="slds-truncate" title="ID">Name</div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="Name">Count</div>
+            </th>
+            <th scope="col">
+              <div class="slds-truncate" title="Name">Existing count</div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <template for:each={ingredients} for:item="ingredient">
+            <tr key={ingredient.Id}>
+              <th scope="row">
+                <div>{ingredient.Ingredient__r.Name}</div>
+              </th>
+              <td>
+                <div>{ingredient.Count__c}</div>
+              </td>
+              <td>
+                <div>{ingredient.Ingredient__r.Count__c}</div>
+              </td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </template>
+    <template if:false={ingredients}>
+      <div class="slds-text-heading_label">Select a recipe</div>
+    </template>
+  </lightning-card>
+</template>

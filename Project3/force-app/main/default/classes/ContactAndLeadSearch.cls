@@ -1,0 +1,9 @@
+public class ContactAndLeadSearch {
+  public static    List<List<sObject>> searchContactsAndLeads(String lastName) {   
+
+     List<List<sObject>> searchList  =  [FIND :lastName IN NAME FIELDS 
+                   RETURNING Contact,Lead];
+        System.debug(searchList);
+    return searchList ;   
+  }
+ }

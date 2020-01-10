@@ -1,0 +1,30 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+  <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    <head>
+      <meta charset="utf-8" />
+      <meta http-equiv="x-ua-compatible" content="ie=edge" />
+      <title>SLDS ResponsiveDesign Visualforce Page in Salesforce Mobile</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+       <!-- Import the Design System style sheet -->
+       <apex:slds />
+    </head>
+    <body>
+      <!-- REQUIRED SLDS WRAPPER -->
+      <div class="slds-scope">
+        <!-- PRIMARY CONTENT WRAPPER -->
+          <!-- RESPONSIVE GRID EXAMPLE -->
+          <div class="myapp">
+              <div class="slds-grid slds-wrap">
+                  <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4">
+                      <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small">Box 1</div>
+                  </div>
+                  <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--3-of-4">
+                      <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small">Box 2</div>
+                  </div>
+              </div>
+          </div>
+          <!-- / RESPONSIVE GRID EXAMPLE -->
+      </div>
+    </body>
+  </html>
+</apex:page>

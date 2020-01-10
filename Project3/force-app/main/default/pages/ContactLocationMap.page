@@ -1,0 +1,123 @@
+<apex:page standardController="Contact" recordSetVar="records" doctype="html-5.0" extensions="ContactLocationMapExtension" lightningStylesheets="true">
+    <apex:includeScript value="{!$Resource.Jquery}"/>
+    <script src="https://maps.google.com/maps/api/js?key={!$Setup.ApiKeyGeocoding__c.ApiKey__c}"></script> 
+    <script type="text/javascript"> 
+        $(document).ready(function() { 
+        $("#adress").on('DOMSubtreeModified', function () {
+            if (document.getElementById('adress').innerHTML) {
+                codeAddress();   
+            }        
+        });
+        
+        function codeAddress() {
+            var geocoder = new google.maps.Geocoder(); 
+            var address = document.getElementById('adress').innerHTML;        
+            geocoder.geocode({ 'address': address}, function(results, status){
+                if (status == 'OK') {    
+                    //Create map
+                    var myOptions = {
+                        zoom: 5,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        mapTypeControl: false
+                    }
+                    map = new google.maps.Map(document.getElementById("map"), myOptions);                
+                    //Center map
+                    map.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location,
+                        title: document.getElementById('adress').innerHTML
+                    });
+                } else {
+                    alert('Please choose another contact: ' + status);
+                }
+            });        
+        };
+    });
+    
+    function getRemoteContact(selectedId) {
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.ContactLocationMapExtension.getAdress}',
+            selectedId,
+            function(result, event) {
+                if (event.status) {    
+                    document.getElementById('location').innerHTML = 'Contact Adress :';
+                    document.getElementById('adress').innerHTML =  result;
+                }               
+            },
+            {escape: false}
+        );
+    }
+    </script> 
+    <style>
+        #map {
+        font-family: Arial;
+        font-size: 12px;
+        height: 450px;
+        background: transparent;
+        }
+    </style>
+    <apex:form id="form"> 
+        <apex:pageBlock title="Contacts List">
+            <apex:pageBlockTable value="{!contacts}" var="c" rendered="{!if(numRecords > 0, 'true', 'false')}">
+                <apex:column headerValue="LastName">  
+                    <apex:outputField value="{!c.contactInWrapper.LastName}" />
+                </apex:column>
+                <apex:column headerValue="Action">
+                    <apex:commandLink value="show location" onclick="getRemoteContact('{!c.contactInWrapper.Id}')" reRender="form"/>
+                </apex:column>
+            </apex:pageBlockTable>
+            <apex:pageBlockSection >
+                <apex:actionStatus id="filterStatus" startText="Please wait...">
+                    <apex:facet name="stop">
+                        <apex:selectList value="{!chosenSize}" size="1" rendered = "{!if(numRecords > 0, 'true', 'false')}">
+                            <apex:outputText value="Number records per page: "/> 
+                            <apex:actionSupport action="{!resetFunction}" event="onchange" status="filterStatus" rerender="form"/>
+                            <apex:selectOptions value="{!itemsValues}"/>
+                        </apex:selectList>
+                    </apex:facet>
+                </apex:actionStatus>
+            </apex:pageBlockSection>
+            <apex:commandButton value="First" action="{!ssc.first}" disabled="{!!ssc.hasPrevious}" reRender="form"/>
+            <apex:commandButton value="Previous" action="{!ssc.previous}" disabled="{!!ssc.hasPrevious}" reRender="form"/>
+            <apex:commandButton value="Next" action="{!ssc.next}" disabled="{!!ssc.hasNext}" reRender="form" />
+            <apex:commandButton value="End" action="{!ssc.last}" disabled="{!!ssc.hasNext}" reRender="form"/><br/>  
+            <apex:outputText value="Page {!ssc.pageNumber} of {!CEILING(numRecords / rowsOnPage)}" rendered = "{!if(numRecords>0, 'true', 'false')}"/>        
+        </apex:pageBlock> 
+        <apex:pageMessages >
+        </apex:pageMessages>
+        <apex:pageBlock title="Sort">   
+            <apex:pageBlockSection columns="2">            
+                <apex:selectList value="{!sortBy}" size="1">
+                    <apex:selectOptions value="{!contactFields}"/>
+                </apex:selectList>
+                <apex:commandButton value="Sort on Page" action="{!null}" styleClass="slds-vf-button_brand"/>
+                <apex:selectList value="{!sortByField}" size="1">
+                    <apex:selectOptions value="{!filterFields}"/> 
+                </apex:selectList>                
+                <apex:commandButton value="Global sort" action="{!sortData}" styleClass="slds-vf-button_brand"/>
+            </apex:pageBlockSection> 
+        </apex:pageBlock>
+        <apex:pageBlock title="Search">
+            <apex:pageblockSection columns="3">
+                <apex:selectList value="{!filterByField}" size="1">
+                    <apex:selectOptions value="{!filterFields}"/> 
+                </apex:selectList>
+                <apex:inputText value="{!textSearch}" title="Text for search" label="Text" />
+                <apex:commandButton value="Search" action="{!sortData}" styleClass="slds-vf-button_brand"/>
+            </apex:pageblockSection>
+        </apex:pageBlock>
+        <apex:pageBlock > 
+            <apex:pageBlockButtons location="Bottom">
+                <apex:commandButton value="Update" action="{!resetFunction}" styleClass="slds-vf-button_brand" />
+            </apex:pageBlockButtons> 
+        </apex:pageBlock>
+    </apex:form>  
+    <apex:pageBlock >        
+        <apex:pageBlockSection columns="2">
+            <span id="location"></span>
+            <span id="adress"></span>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    <div id="map"></div>
+</apex:page>

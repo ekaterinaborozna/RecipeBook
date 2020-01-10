@@ -1,0 +1,18 @@
+<apex:page standardcontroller="Account" extensions="ExampleExtension">
+    <apex:outputText value="{!text}" id="info"/>
+    <apex:outputPanel onclick="methodAF()">
+    Cleck me
+    </apex:outputPanel>
+    
+    <apex:form >
+        <apex:actionFunction action="{!methodOne}" reRender="info" name="methodAF"/> 
+    </apex:form>
+    
+    <apex:form >
+        <apex:actionFunction action="{!updatetime}" reRender="info" name="showt"/>
+        <apex:commandButton onclick="showt()" value="buttonForupdateTimeInCntr"/>
+    </apex:form>
+          <apex:outputPanel onclick="showt()">
+    Cleck me22
+    </apex:outputPanel>  
+</apex:page>

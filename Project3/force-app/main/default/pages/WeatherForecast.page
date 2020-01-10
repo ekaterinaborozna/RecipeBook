@@ -1,0 +1,48 @@
+<apex:page controller="WeatherController">
+    <apex:form >  
+        <apex:pageBlock id="weather" title="{!selectedCity} Current weather">
+            <apex:pageBlockSection title="Choose city">  
+            <apex:selectList value="{!selectedCity}" size="1">
+                <apex:selectOptions value="{!cityList}"/>
+            </apex:selectList>
+                <apex:commandButton action="{!save}" value="Get Forecast" reRender="weather"/>
+            </apex:pageBlockSection> 
+            <apex:pageBlockSection title="Weather for today">             
+                <apex:outputText label="Date" value="{!wrapperWeatherList[2].dateP}"/>
+                <apex:outputText label="Time" value="{!wrapperWeatherList[2].timeP}"/>
+                <apex:outputText label="Temperature" value="{!wrapperWeatherList[2].temperatureP}"/>
+                <apex:outputText label="Pressure" value="{!wrapperWeatherList[2].pressureP}"/>
+                <apex:outputText label="Weather" value="{!wrapperWeatherList[2].weatherP}"/>
+                <apex:outputText label="CloudPercent" value="{!wrapperWeatherList[2].CloudPercentP}"/>
+                <apex:outputText label="SpeedWind" value="{!wrapperWeatherList[2].SpeedWindP}"/>
+            </apex:pageBlockSection>  
+            <apex:pageBlockSection title="Weather for tommorow">             
+                <apex:outputText label="Date" value="{!wrapperWeatherList[3].dateP}"/>
+                <apex:outputText label="Time" value="{!wrapperWeatherList[3].timeP}"/>
+                <apex:outputText label="Temperature" value="{!wrapperWeatherList[3].temperatureP}"/>
+                <apex:outputText label="Pressure" value="{!wrapperWeatherList[3].pressureP}"/>
+                <apex:outputText label="Weather" value="{!wrapperWeatherList[3].weatherP}"/>
+                <apex:outputText label="CloudPercent" value="{!wrapperWeatherList[3].CloudPercentP}"/>
+                <apex:outputText label="SpeedWind" value="{!wrapperWeatherList[3].SpeedWindP}"/>          
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Weather in two days">             
+                <apex:outputText label="Date" value="{!wrapperWeatherList[5].dateP}"/>
+                <apex:outputText label="Time" value="{!wrapperWeatherList[5].timeP}"/>
+                <apex:outputText label="Temperature" value="{!wrapperWeatherList[5].temperatureP}"/>
+                <apex:outputText label="Pressure" value="{!wrapperWeatherList[5].pressureP}"/>
+                <apex:outputText label="Weather" value="{!wrapperWeatherList[5].weatherP}"/>
+                <apex:outputText label="CloudPercent" value="{!wrapperWeatherList[5].CloudPercentP}"/>
+                <apex:outputText label="SpeedWind" value="{!wrapperWeatherList[5].SpeedWindP}"/>          
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Weather in three days">             
+                <apex:outputText label="Date" value="{!wrapperWeatherList[7].dateP}"/>
+                <apex:outputText label="Time" value="{!wrapperWeatherList[7].timeP}"/>
+                <apex:outputText label="Temperature" value="{!wrapperWeatherList[7].temperatureP}"/>
+                <apex:outputText label="Pressure" value="{!wrapperWeatherList[7].pressureP}"/>
+                <apex:outputText label="Weather" value="{!wrapperWeatherList[7].weatherP}"/>
+                <apex:outputText label="CloudPercent" value="{!wrapperWeatherList[7].CloudPercentP}"/>
+                <apex:outputText label="SpeedWind" value="{!wrapperWeatherList[7].SpeedWindP}"/>          
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

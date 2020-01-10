@@ -1,0 +1,24 @@
+<apex:page sidebar="false" showHeader="true" standardController="Account">
+    <!-- https://github.com/tyoshikawa1106/visualforce-and-lightning-design-system/blob/master/README.md-->
+    <apex:composition template="CharityTemplate">
+        <apex:define name="Header">
+            Registration available
+        </apex:define>
+        <apex:define name="LeftSidebar">
+            <!--Link to page info-->
+            <apex:outputLink value="{!URLFOR('Info')}" >
+                Go to page Info
+            </apex:outputLink> 
+            
+            <!--<c:ComponentForCharity userId="{!Account.CreatedById}"/>-->
+        </apex:define>
+        <apex:define name="Content">
+            Registration date            
+            <apex:detail />
+        </apex:define>
+        <apex:define name="Footer">
+            <apex:outputLabel value="Hi, {!$User.FirstName}  {!$User.LastName}!"/>
+        </apex:define>
+    </apex:composition>
+    
+</apex:page>

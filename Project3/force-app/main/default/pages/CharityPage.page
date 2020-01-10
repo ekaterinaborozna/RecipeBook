@@ -1,0 +1,58 @@
+<apex:page doctype="html-5.0"  extensions="CharityFormExtension" standardController="Contact" recordSetVar="records">
+    <apex:slds />
+    <script type="text/javascript"> 
+    getRemoteCampaignDate();
+    function getRemoteCampaignDate() {
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.CharityFormExtension.getRemoteCampaignDate}',
+            function(result, event) {
+                if (event.status) {
+                    if (result == false) {
+                        //document.getElementById('jsFastForms').style.display = 'none';
+                        document.getElementById('registrationFormStack').remove(); 
+                        document.getElementById('message').innerHTML = 'The granting period is finished. Please try next year!';   
+                    }                    
+                }               
+            },
+            {escape: false}
+        );
+    };
+       </script>
+    <p id="message"> 
+    </p>
+    <div id="registrationFormStack">
+     <script type="text/javascript" id="jsFastForms" src="https://sfapi.formstack.io/FormEngine/Scripts/Main.js?d=nbMjYgygOgDJ3dFBbAXlHOtaCF27gYc01hzUGggcThPL5J7cWFYBIc9xTBGiVAyh"></script>
+    </div>      
+    <div id="form">
+        <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+            <input type="hidden"  name="oid" value="00D2v000001wmMr"/>
+            <input type="hidden"  name="retURL" value="https://charity8033-developer-edition.ap15.force.com/"/> 
+    <div class="slds-grid">
+    <div class="slds-col">    
+      <label for="first_name">First Name</label><br/>                               
+      <label for="last_name">Last Name</label><br/>                                 
+      <label for="email">Email</label><br/>                      
+      <label for="company">Company</label><br/> 
+    </div>
+    <div class="slds-col">
+      <input  id="first_name" maxlength="40" name="first_name" size="20" type="text" required="true"/><br/>   
+      <input  id="last_name" maxlength="80" name="last_name" size="20" type="text" required="true"/><br/>   
+      <input  id="email" maxlength="80" name="email" size="20" type="text" required="true"/><br/>   
+      <input  id="company" maxlength="40" name="company" size="20" type="text" required="true"/><br/> 
+    </div>  
+    </div>       
+      Language:<select  id="00N2v00000UvLpU" name="00N2v00000UvLpU" title="Language">
+      <option value="">--None--</option><option value="EN">EN</option>
+      <option value="DE">DE</option>
+      </select>
+      <input type="submit" name="submit"/>
+    </form>             
+    </div>         
+      <style>
+        #form {
+         border: 4px double black;
+         background: #fc3; /* Цвет фона */
+         padding: 10px;
+       }
+      </style>
+</apex:page>

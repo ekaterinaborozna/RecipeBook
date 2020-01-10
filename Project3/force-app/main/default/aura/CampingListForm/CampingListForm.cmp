@@ -1,0 +1,42 @@
+<aura:component controller="CampingListController">
+<aura:registerEvent name="addItem" type="c:addItemEvent" />
+
+<aura:attribute name="newItem" type="Camping_Item__c"
+ default="{ 'sobjectType': 'Camping_Item__c',
+                'Name': '',
+                'Quantity__c': 0,
+                'Price__c': 0,
+                'Packed__c': false }" required="true"/>
+
+<!-- CREATE NEW ITEM FORM -->
+<form class="slds-form--stacked">
+
+  <div class="slds-form-element slds-is-required">
+      <div class="slds-form-element__control">
+          <lightning:input aura:id="campingItem" type="text" name="name" label="Name" value="{!v.newItem.Name}" required="true" />
+      </div>
+ </div>
+
+ <div class="slds-form-element slds-is-required">
+      <div class="slds-form-element__control">
+          <lightning:input aura:id="campingItem" type="number" label="Quantity" name="quantity" value="{!v.newItem.Quantity__c}" step="1" min="1" required="true" />
+      </div>
+  </div>
+
+  <div class="slds-form-element">
+      <div class="slds-form-element__control">
+          <lightning:input aura:id="campingItem" type="number" formatter="currency" name="price" label="Price" value="{!v.newItem.Price__c}"  />
+      </div>
+  </div>
+
+  <div class="slds-form-element">
+      <lightning:input aura:id="campingItem" type="checkbox" label="Packed?" name="packed" checked="{!v.newItem.Packed__c}" />
+  </div>
+
+  <div class="slds-form-element">
+      <lightning:button label="Create Camping Item" onclick="{!c.clickCreateItem}" />
+  </div>
+
+</form>
+<!-- / CREATE NEW ITEM FORM -->
+</aura:component>

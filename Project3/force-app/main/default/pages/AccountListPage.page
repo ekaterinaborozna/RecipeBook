@@ -1,0 +1,32 @@
+<apex:page controller="CustomAccountListController">
+    <apex:form >
+        <apex:pageBlock id="theList">
+            <apex:pageMessages />
+                <apex:pageBlockSection >
+                    <apex:actionStatus id="filterStatus" startText="Please wait...">
+                        <apex:facet name="stop">
+                            <apex:selectList value="{!chosenSize}" size="1">
+                                <apex:actionSupport action="{!ApplyFilter}" event="onchange" status="filterStatus" rerender="theList"/>
+                                <apex:selectOptions value="{!sizeOptions}"/>
+                            </apex:selectList>
+                        </apex:facet>
+                    </apex:actionStatus>
+                </apex:pageBlockSection> -->
+
+          <!--  <apex:pageBlockSection>
+                <apex:selectList value="{!chosenSize}" size="1"> 
+                    <apex:actionSupport action="{!ApplyFilter}" event="onchange"/>
+                    <apex:selectOptions value="{!sizeOptions}"/>
+                </apex:selectList>
+            </apex:pageBlockSection>-->
+            
+            <apex:pageBlockTable value="{!ssc.Records}" var="a" rendered="{!ssc.Records != null}">
+                <apex:column value="{!a['Name']}"/>
+                <apex:column value="{!a['Rating']}"/>
+                <apex:column value="{!a['NumberOfEmployees']}"/>
+            </apex:pageBlockTable>
+            <apex:commandLink action="{!ssc.Previous}" value="Previous Page" rendered="{!ssc.HasPrevious}"/>
+            <apex:commandLink action="{!ssc.Next}" value="Next Page" rendered="{!ssc.HasNext}"/>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

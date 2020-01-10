@@ -1,0 +1,74 @@
+<apex:page docType="html-5.0" controller="CurrencyConvert">
+    <apex:form >  
+        <apex:pageBlock >
+            
+            <apex:pageBlockSection > 
+                <apex:actionFunction action="{!save}" name="getResult" >
+                    <apex:commandButton onclick="getResult()" rerender="w" value="Get courses"  />
+                    <apex:input type="date" value="{!dateP}" />
+                </apex:actionFunction>   	
+            </apex:pageBlockSection>  
+            
+        </apex:pageBlock>               
+        <apex:pageBlock >       
+            <apex:pageBlockSection >  
+                <apex:selectList value="{!selectedCurrency}" size="1" id="idCurrency">
+                    <apex:selectOptions value="{!currencyList}"/>
+                </apex:selectList>  
+                
+                <apex:actionFunction name="convert" >
+                    <apex:commandButton onclick="convert('{!$Component.idSum}', '{!$Component.idCurrency}', '{!$Component.idTable}', '{!$Component.idSum2}', '{!$Component.idCurrency2}')" value="Convert"  />
+                    <apex:input value="{!sum}" id="idSum"/>
+                </apex:actionFunction>
+                
+                <apex:selectList value="{!selectedCurrency2}" size="1" id="idCurrency2">
+                    <apex:selectOptions value="{!currencyList2}"/>
+                </apex:selectList> 
+                
+                <apex:actionFunction name="convert2" >
+                    <apex:input value="{!sum2}" id="idSum2"  /> 
+                </apex:actionFunction>
+                
+                  <script type="text/javascript">
+                    function convert(elId, elIdcurrency, elIdtable, elId2, elIdcurrency2) {
+                        if (document.getElementById(elId).value.length != null) {
+                              var targetCurrency = document.getElementById(elIdcurrency).value; 
+                              var targetCurrency2 = document.getElementById(elIdcurrency2).value;
+                              var table = document.getElementById(elIdtable);
+                            
+                            for (var r = 0, n = table.rows.length; r < n; r++) {
+                                for (var c = 0, m = table.rows[r].cells.length; c < m; c++) {
+                                    if (table.rows[r].cells[0].innerHTML == targetCurrency) {
+                                        var targetCourse = table.rows[r].cells[1].innerHTML;  
+                                        var targetScale = table.rows[r].cells[2].innerHTML;
+                                    }     
+                                }
+                            }    
+                            for (var r = 0, n = table.rows.length; r < n; r++) {
+                                for (var c = 0, m = table.rows[r].cells.length; c < m; c++) {
+                                    if (table.rows[r].cells[0].innerHTML == targetCurrency2) {
+                                        var targetCourse2 = table.rows[r].cells[1].innerHTML;  
+                                        var targetScale2 = table.rows[r].cells[2].innerHTML;
+                                    }     
+                                }           
+                                
+                            }                              
+                              var targetSum = document.getElementById(elId);
+                              targetSum.value = (targetSum.value / targetCourse * targetScale).toFixed(3); 
+                              var targetSum2 = document.getElementById(elId2);
+                            targetSum2.value = (targetSum.value / targetScale * targetCourse /targetCourse2 * targetScale2).toFixed(3);      
+                        }      
+                    }             
+                  </script> 
+                
+            </apex:pageBlockSection>
+            <apex:messages />
+            <apex:pageBlockTable value="{!resultCurrencyList}" var="cur" id="idTable">
+                <apex:column title="Abbreviation" value="{!cur.Cur_Abbreviation}" />
+                <apex:column title="OfficialRate" value="{!cur.Cur_OfficialRate}"/>
+                <apex:column title="Scale" value="{!cur.Cur_Scale}"/>
+            </apex:pageBlockTable> 
+            
+        </apex:pageBlock>        
+    </apex:form>
+</apex:page>

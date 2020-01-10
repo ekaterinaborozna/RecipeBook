@@ -1,0 +1,23 @@
+.picklistNumber {
+    width: 100px;
+}
+
+.inputName {
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+div.wrapper {
+    width: 400px;
+}
+
+    div.left_block {
+    float: left;
+    width: 200px;
+}
+
+    div.right_block {
+    float: right;
+    width: 200px;
+    padding: 24px;
+}

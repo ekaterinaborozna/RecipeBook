@@ -1,0 +1,10 @@
+<apex:page sidebar="false" showHeader="true">    
+    <apex:composition template="CharityTemplate">
+        <apex:define name="Header">
+            Adding information
+        </apex:define>
+        <apex:define name="Content">
+            Contacts
+        </apex:define>
+    </apex:composition>    
+</apex:page>

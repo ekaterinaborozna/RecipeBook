@@ -1,0 +1,26 @@
+<apex:page showHeader="false" sidebar="false">
+    <apex:slds /> 
+    <!--Header-->
+    <div class="slds-page-header">
+        <p class="slds-text-heading--label">Registration</p>
+        <apex:insert name="Header"/>
+    </div>
+    
+    <!--Content-->
+    <div class="slds-grid">      
+        <div class="slds-col slds-box slds-size_2-of-12">
+            <apex:insert name="LeftSidebar"/>
+        </div>
+        <div class="slds-col slds-box slds-size_10-of-12">
+            <h2>
+                Content:  
+            </h2>
+            <apex:insert name="Content"/>
+        </div>
+    </div>
+    <!--Footer-->
+    <div class="slds-page-footer">
+        <p class="slds-text-heading--label"></p>
+        <apex:insert name="Footer"/>
+    </div>
+</apex:page>
